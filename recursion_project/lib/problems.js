@@ -16,8 +16,13 @@
 // lucasNumber(3)   // => 4
 // lucasNumber(5)   // => 11
 // lucasNumber(9)   // => 76
-function lucasNumber(n) {
+function lucasNumber(n, memo={}) {
+    if (n in memo) return memo[n];
+    if (n === 1) return 1;
+    if (n === 0) return 2;
 
+    memo[n] = lucasNumber(n-1) + lucasNumber(n-2);
+    return memo[n];
 }
 
 
@@ -33,7 +38,10 @@ function lucasNumber(n) {
 // sumArray([5, 2])         // => 7
 // sumArray([4, 10, -1, 2]) // => 15
 function sumArray(array) {
+    if (array.length === 0) return 0;
+    if (array.length === 1) return array[0];
 
+    return array[0] + sumArray(array.slice(1));
 }
 
 
@@ -49,7 +57,10 @@ function sumArray(array) {
 // reverseString("internet")    // => "tenretni"
 // reverseString("friends")     // => "sdneirf"
 function reverseString(str) {
+    if (str.length === 0) return '';
+    if (str.length === 1) return str;
 
+    return reverseString(str.slice(1)) + str[0];
 }
 
 
@@ -70,7 +81,11 @@ function reverseString(str) {
 // pow(3, 4)    // => 81
 // pow(2, -5)   // => 0.03125
 function pow(base, exponent) {
+    if (exponent === 0) return 1;
 
+    let theBase = exponent > 0 ? base : 1 / base;
+    let theExp = exponent > 0 ? exponent : -exponent;
+    return theBase * pow(theBase, theExp - 1);
 }
 
 
@@ -103,7 +118,14 @@ function pow(base, exponent) {
 //     2-dimensional array: [['some data']]
 //     3-dimensional array: [[['some data']]]
 function flatten(data) {
+    if (!Array.isArray(data)) return [data];
 
+    let finalArray = [];
+    for (let i = 0; i < data.length; i++) {
+        if (Array.isArray(data[i])) finalArray = finalArray.concat(flatten(data[i]));
+        else finalArray.push(data[i]);
+    }
+    return finalArray;
 }
 
 // Write a function, fileFinder(directories, targetFile), that accepts an object representing directories and a string respresenting a filename.
@@ -147,6 +169,13 @@ function flatten(data) {
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
 function fileFinder(directories, targetFile) {
 
+    let children = Object.entries(directories);
+    for (let i = 0; i < children.length; i++) {
+        console.log(children[i][0]);
+        if (children[i][0] === targetFile) return true;
+        else if (children[i][1] !== null) fileFinder(children[i][1], targetFile);
+    }
+    return false;
 }
 
 
