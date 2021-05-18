@@ -171,9 +171,11 @@ function fileFinder(directories, targetFile) {
 
     let children = Object.entries(directories);
     for (let i = 0; i < children.length; i++) {
-        console.log(children[i][0]);
         if (children[i][0] === targetFile) return true;
-        else if (children[i][1] !== null) fileFinder(children[i][1], targetFile);
+        else if (children[i][1] !== null) {
+            let found = fileFinder(children[i][1], targetFile);
+            if (found) return true;
+        }
     }
     return false;
 }
