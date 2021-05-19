@@ -122,7 +122,7 @@ function flatten(data) {
 
     let finalArray = [];
     for (let i = 0; i < data.length; i++) {
-        if (Array.isArray(data[i])) finalArray = finalArray.concat(flatten(data[i]));
+        if (Array.isArray(data[i])) finalArray.push(...flatten(data[i]));
         else finalArray.push(data[i]);
     }
     return finalArray;
