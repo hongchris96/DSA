@@ -169,15 +169,21 @@ function flatten(data) {
 // fileFinder(desktop, 'sequoia.jpeg');             // => false
 function fileFinder(directories, targetFile) {
 
-    let children = Object.entries(directories);
-    for (let i = 0; i < children.length; i++) {
-        if (children[i][0] === targetFile) return true;
-        else if (children[i][1] !== null) {
-            let found = fileFinder(children[i][1], targetFile);
-            if (found) return true;
+    for (let key in directories) {
+        if (key === targetFile || fileFinder(directories[key], targetFile)) {
+            return true;
         }
     }
     return false;
+    // let children = Object.entries(directories);
+    // for (let i = 0; i < children.length; i++) {
+    //     if (children[i][0] === targetFile) return true;
+    //     else if (children[i][1] !== null) {
+    //         let found = fileFinder(children[i][1], targetFile);
+    //         if (found) return true;
+    //     }
+    // }
+    // return false;
 }
 
 
@@ -190,8 +196,15 @@ function fileFinder(directories, targetFile) {
 // pathFinder(desktop, 'trixie_lou.jpeg'));     // => '/images/pets/trixie_lou.jpeg'
 // pathFinder(desktop, 'everlong.flac'));       // => '/music/genres/rock/everlong.flac'
 // pathFinder(desktop, 'honeybadger.png'));     // => null
-function pathFinder(directories, targetFile) {
-
+function pathFinder(directories, targetFile) {;
+    for (let key in directories) {
+        if (key === targetFile) return '/' + key;
+        
+        let subdir = directories[key];
+        let subpath = pathFinder(subdir, targetFile);
+        if (subpath !== null) return key + subpath; 
+    }
+    return null;
 }
 
 
