@@ -23,6 +23,7 @@ function minPathSum(grid) {
     }
 
     return cummTable[height - 1][width - 1];
+
 }
 
 // console.log(minPathSum(grid));
