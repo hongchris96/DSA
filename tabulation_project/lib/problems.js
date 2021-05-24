@@ -20,8 +20,35 @@
 // stepper([3, 1, 0, 5, 10]);           // => true, because we can step through elements 3 -> 5 -> 10
 // stepper([3, 4, 1, 0, 10]);           // => true, because we can step through elements 3 -> 4 -> 10
 // stepper([2, 3, 1, 1, 0, 4, 7, 8])    // => false, there is no way to step to the end
-function stepper(nums) {
+function stepper(nums, memo={}) {
 
+    // Tabulation: 
+
+    // let steppable = new Array(nums.length).fill(false);
+    // steppable[0] = true;
+    // for (let i = 0; i < nums.length; i++) {
+    //     if (steppable[i] === true) {
+    //         let howManySteps = nums[i];
+    //         for (let step = 1; step <= howManySteps; step++) {
+    //             steppable[i + step] = true;
+    //         }
+    //     }
+    // }
+    // return steppable[steppable.length-1];
+
+    // Memoization
+
+    let arr = String(nums);
+    if (arr in memo) return memo[arr];
+    if (nums.length === 0) return true;
+    for (let i = 1; i <= nums[0]; i++) {
+        if (stepper(nums.slice(i), memo)) {
+            memo[arr] = true;
+            return memo[arr];
+        };
+    }
+    memo[arr] = false;
+    return memo[arr];
 }
 
 
