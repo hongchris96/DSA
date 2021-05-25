@@ -38,17 +38,17 @@ function stepper(nums, memo={}) {
 
     // Memoization
 
-    let arr = String(nums);
-    if (arr in memo) return memo[arr];
+    let arrlengths = nums.length;
+    if (arrlengths in memo) return memo[arrlengths];
     if (nums.length === 0) return true;
     for (let i = 1; i <= nums[0]; i++) {
         if (stepper(nums.slice(i), memo)) {
-            memo[arr] = true;
-            return memo[arr];
+            memo[arrlengths] = true;
+            return memo[arrlengths];
         };
     }
-    memo[arr] = false;
-    return memo[arr];
+    memo[arrlengths] = false;
+    return memo[arrlengths];
 }
 
 
@@ -62,7 +62,34 @@ function stepper(nums, memo={}) {
 //
 // maxNonAdjacentSum([2, 7, 9, 3, 4])   // => 15, because 2 + 9 + 4
 // maxNonAdjacentSum([4,2,1,6])         // => 10, because 4 + 6 
-function maxNonAdjacentSum(nums) {
+function maxNonAdjacentSum(nums, memo={}) {
+    if (nums.length in memo) return memo[nums.length];
+    if (nums.length === 0) return 0;
+
+     // Tabulation: 
+
+    // let currentMaxs = new Array(nums.length).fill(0);
+    // currentMaxs[0] = nums[0];
+    // for (let i = 1; i < nums.length; i++) {
+    //     let twoToTheLeft = currentMaxs[i - 2] === undefined ? 0 : currentMaxs[i - 2];
+    //     let oneToTheLeft = currentMaxs[i - 1];
+    //     let sumHere = twoToTheLeft + nums[i];
+    //     currentMaxs[i] = Math.max(oneToTheLeft, sumHere);
+    // }
+    // return currentMaxs[currentMaxs.length - 1];
+    // maxNonAdjacentSum([2, 7, 9, 3, 4])   // => [2, 7, 11, 11, 15]
+    // maxNonAdjacentSum([4,2,1,6])         // => [4, 4, 5, 10]
+
+    // Memoization: 
+    
+    let thisElement = nums[0];
+    memo[nums.length] = Math.max(
+        // this element + the max for [2,3,4,n] skipping neighbor
+        thisElement + maxNonAdjacentSum(nums.slice(2), memo),
+        // the max for [1,2,3,4,n]
+        maxNonAdjacentSum(nums.slice(1), memo)
+    ); // Eventual base case is [] => 0, [n] => n + 0
+    return memo[nums.length];
 
 }
 
