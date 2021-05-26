@@ -3,16 +3,17 @@ function radixSort(arr) {
     if (arr.length === 0) return arr;       // edge case
     let digits = new Array(10).fill().map(() => new Array); // making digit buckets
     let newArr = arr;                       // initial array copy
-    let maxDig = arr[0].toString().length;  // initial max digit
+    let maxDig = arr[0] === 0 ? 1 : Math.floor(Math.log10(Math.abs(arr[0]))) + 1;  // initial max digit
     // iterate to discover max digit
     for (let i = 0; i < arr.length; i++) {
-        if (arr[i].toString().length > maxDig) maxDig = arr[i].toString().length;
+        let thisNumDig = arr[i] === 0 ? 1 : Math.floor(Math.log10(Math.abs(arr[i]))) + 1;
+        if (thisNumDig > maxDig) maxDig = thisNumDig;
     }
     // Start operation from the 1s, then 10s and up
-    for (let round = 1; round <= maxDig; round++ ) {
+    for (let round = 0; round < maxDig; round++ ) {
         // Checking each number in the array, put them in corresponding buckets
         for (let i = 0; i < newArr.length; i++) {
-            let currentDig = Math.floor(newArr[i]/(10**(round-1))) % 10;
+            let currentDig = Math.floor(newArr[i]/(10**round)) % 10;
             digits[currentDig].push(newArr[i]);
         }
         // Clear out array copy
