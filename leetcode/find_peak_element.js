@@ -23,20 +23,47 @@
 // nums[i] != nums[i + 1] for all valid i.
 
 
+// Failed Solution
+
 var findPeakElement = function(nums) {
+    return search(nums, true);
+}
+
+var search = function(nums, originalNums) {
     if (nums.length === 1) return null;
-    if (nums[0] > nums[1]) return 0;
-    if (nums[nums.length-1] > nums[nums.length-2]) return nums.length-1;
+    if (originalNums && nums[0] > nums[1]) return 0;
+    if (originalNums && nums[nums.length-1] > nums[nums.length-2]) return nums.length-1;
     
     let midIdx = Math.floor(nums.length/2);
     
     if (nums[midIdx] > nums[midIdx - 1] && nums[midIdx] > nums[midIdx + 1]) {
         return midIdx;
     } else {
-        let leftRes = findPeakElement(nums.slice(0, midIdx+1));
+        let leftRes = search(nums.slice(0, midIdx+1), false);
         if (leftRes) return leftRes;
-        let rightRes = findPeakElement(nums.slice(midIdx, nums.length));
+        let rightRes = search(nums.slice(midIdx, nums.length), false);
         if (rightRes) return midIdx + 1 + rightRes;
     }
 };
 
+
+// Solution
+
+var findPeakElement = function(nums) {
+    let l = 0;
+    let r = nums.length - 1;
+    while (l < r) {
+        let mid = Math.floor((l + r) / 2);
+        if (nums[mid] > nums[mid + 1])
+            r = mid;
+        else
+            l = mid + 1;
+    }
+    return l;
+}
+
+
+nums = [1,2,1,3,5,6,4];
+
+
+console.log(findPeakElement(nums));
