@@ -21,25 +21,42 @@
 // 1 <= nums.length <= 105
 // 1 <= nums[i] <= 105
 
+
+// Brute force
+
 var minSubArrayLen = function(target, nums) {
-    let minLength = Infinity;
+    let minLength = nums.length + 1;
     let currentSum = 0;
     let currentLength = 1;
     
     for (let i = 0; i < nums.length; i++) {
-        if (nums[i] === target) return 1;
+        console.log('minLength is');
+        console.log(minLength);
+        console.log('i is');
+        console.log(i);
+        if (nums[i] >= target) return 1;
+        currentSum += nums[i]
         for (let j = i + 1; j < nums.length || j < i + minLength; j++) {
             currentSum += nums[j];
             currentLength += 1;
             if (currentSum >= target) {
-                if (currentLength < minLength) {
-                    minLength = currentLength;
-                    currentSum = 0;
-                }
                 break;
             }
         }
+        if (currentLength < minLength) {
+            minLength = currentLength;
+        }
+        currentLength = 1;
+        currentSum = 0;
+        
     }
-    return minLength;
+    return (minLength === nums.length + 1 ? 0 : minLength);
 };
 
+
+// Binary search Solution
+// https://leetcode.com/problems/minimum-size-subarray-sum/solution/
+
+
+
+console.log(minSubArrayLen(11, [1,1,1,1,1,1,1]));
