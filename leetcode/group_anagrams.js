@@ -21,4 +21,18 @@
 // strs[i] consists of lower-case English letters.
 
 
+var groupAnagrams = function(strs) {
+    let anaGroups = {};
+    for (let i = 0; i < strs.length; i++) {
+        let anaKey = strs[i].split("").sort().join("");
+        if (anaGroups[anaKey]) {
+            anaGroups[anaKey].push(strs[i]);
+        } else {
+            anaGroups[anaKey] = [strs[i]];
+        }
+    }
+    return Object.values(anaGroups);
+};
 
+strs = ["eat","tea","tan","ate","nat","bat"];
+console.log(groupAnagrams(strs)); // [["eat","tea","ate"],["tan","nat"],["bat"]])
