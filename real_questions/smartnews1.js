@@ -13,28 +13,14 @@
 //  [1,4,4],
 //  [4,1,1]]
 
+//  🔴🔵🔵
+//  🔵⚪🔵
+//  ⚪✅🔵
+//  ✅✅✅
+//  ⚪⚪🔵
+//  ⚫🔵🔵
+//  🔵⚫⚫
 // ------------------------------------------------------------------------------
-
-// function solution(A) {
-//     // write your code in JavaScript (Node.js 8.9.4)
-//     let countries = {};
-
-//     for (let row = 0; row < A.length; row++) {
-//         for (let column = 0; column < A[0].length; column++) {
-//             if (!(A[row][column] in countries)) {
-//                 countries[A[row][column]] = new Array()
-//             }
-//             countries[A[row][column]].push([row, column]);
-//         }
-//     }
-//     console.log(countries);
-//     let amount = 0;
-//     for (let key in countries) {
-//         amount += 1;
-//     }
-
-//     return amount;
-// }
 
 function solution(A) {
     // write your code in JavaScript (Node.js 8.9.4)
