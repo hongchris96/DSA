@@ -41,9 +41,14 @@ function StringChallenge(str) {
             }
         }
     }
-    return (eleStack.length === 0).toString();
+    if (eleStack.length === 0) {
+        return 'true';
+    } else {
+        return eleStack[0];
+    }
 }
 
 console.log(StringChallenge("<div><b><p>hello</p></b></div>")); // "true"
 console.log(StringChallenge("<div><div><b></b></div></p>")); // "div"
 console.log(StringChallenge("<div>abc</div><p><em><i>test test</b></em></p>")); // "i"
+console.log(StringChallenge("<div>")); // "div"
