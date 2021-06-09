@@ -24,4 +24,4 @@ def minMoves(n, startRow, startCol, endRow, endCol):
                 return -1
 
 
-print(minMoves(9, 4, 4, 4, 8))
+print(minMoves(9, 4, 4, 4, 8))  # 2
