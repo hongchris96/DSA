@@ -7,7 +7,8 @@ from collections import defaultdict
 
 def minMoves(n, startRow, startCol, endRow, endCol):
     # Write your code here
-    dirs = ((1, 2), (2, 1), (2, -1), (1, -2), (-1, 2), (-2, 1), (-2, -1), (-1, -2))
+    dirs = ((1, 2), (2, 1), (2, -1), (1, -2),
+            (-1, 2), (-2, 1), (-2, -1), (-1, -2))
     minMovesRoutes = defaultdict(int)
 
     def DFS(n, startRow, startCol, endRow, endCol):
@@ -18,7 +19,12 @@ def minMoves(n, startRow, startCol, endRow, endCol):
         for (dRow, dCol) in dirs:
             nextStartRow = startRow + dRow
             nextStartCol = startCol + dCol
-            if nextStartRow >= 0 and nextStartRow < n and nextStartCol >= 0 and nextStartCol < n:
+            if (
+                nextStartRow >= 0
+                and nextStartRow < n
+                and nextStartCol >= 0
+                and nextStartCol < n
+            ):
                 DFS(n, nextStartRow, nextStartCol, endRow, endCol)
             else:
                 return -1
