@@ -13,7 +13,8 @@ def scatterPalindrome(strToEvaluate):
         letterCount = defaultdict(int)
         for letter in word:
             letterCount[letter] += 1
-        oddCountLetter = [char for char in letterCount if letterCount[char] % 2 != 0]
+        oddCountLetter = \
+            [char for char in letterCount if letterCount[char] % 2 != 0]
         return len(oddCountLetter) <= 1
 
     scatPalCount = 0
