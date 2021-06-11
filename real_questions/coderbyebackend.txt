@@ -1,0 +1,69 @@
+What are the benefits of AWS CodeBuild in AWS DevOps?
+
+AWS CodeBuild compiles source code, run tests, and produce 
+packages without the need to manage build servers, allowing 
+servers to scale automatically to meet your build volume.
+
+
+What deployment strategies do you know and have used before? How can a company deploy with no downtime?
+
+Company can use Zero Downtime Deployment where the site is never down or unstable during deployment 
+because even when there are changes made to the code, the web server doesn't start until the entire 
+deployment process is complete. Atomic Deployment is a specific type that deploys the files to the 
+cache directory on the server, copy the files to a newly created release directory, then switch the 
+symlink of the web server to the new version.
+
+
+What are some deployment anti-patterns?
+
+Manual Deploy is where the developer write instructions to build and deploy on a 
+paper document which makes it easy to read and follow. Since the input of configurations 
+and other secrets are not written in the code and there's not automatic triggers, 
+there could be many manual errors. Another anti-pattern is the Big Bang Deploy 
+where a huge amount of changes were made in one deployment, which can result in a huge rollback 
+and more work to do when failure arise.
+
+
+What are the tools you could use for configuration management?
+
+Git is a foundational configuration management tool used to store 
+Git repository and have version control tracking. Docker is another 
+popular tool that makes containers isolated and easy to use but can 
+communicate with each other using well established channels.
+
+
+What is trunk-based development? Why is it a recommended practice for continuous integration?
+
+Trunk-based development is when the team write all their codes on a single branch called "Trunk". 
+It is beneficial because it avoids merge conflicts and does not break build. Single branch is used 
+for a small team. For a larger scaled team, where members create short-lived feature branches and 
+go through pull request code review and build automation before merging to the Trunk branch.
+
+
+What is the difference between > and >> operators in Linux?
+
+The > operator creates a new file or overwrites an existing one; the >> creates a new file or appends to an existing one.
+
+
+Linux permissions:
+
+To change the mode of a file, use the chmod command. The general form is:
+chmod X@Y file1 file2 ...
+where X is any combination of the letters 'u' (for owner), 'g' (for group), 'o' (for others), 
+'a' (for all; that is, for 'ugo'); @ is either '+' to add permissions, '-' to remove permissions, 
+or '=' to assign permissions absolutely; and Y is any combination of 'r', 'w', 'x'. Examples:
+
+# Give the owner rx permissions, but not w 
+chmod u=rx file
+ 
+# Deny rwx permission for group and others 
+chmod go-rwx file       
+
+# Give write permission to the group
+chmod g+w file
+
+# Give execute permission to everybody
+chmod a+x file1 file2
+
+# OK to combine like this with a comma
+chmod g+rx,o+x file   
