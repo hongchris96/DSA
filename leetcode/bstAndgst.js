@@ -37,7 +37,7 @@
  * @return {TreeNode}
  */
 
- var bstToGst = function(root) {
+var bstToGst = function(root) {
   let stack = dfsInOrder(root); // Array of nodes from in order dfs
   let currentNode = stack.pop(); // Big original val node
   let currentSum = currentNode.val; // Sum accumulator
