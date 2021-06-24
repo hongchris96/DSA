@@ -37,20 +37,28 @@
  * @return {TreeNode}
  */
 
-var bstToGst = function(root) {
-  let stack = dfs(root, [root]);
-  
+ var bstToGst = function(root) {
+  let stack = dfsInOrder(root); // Array of nodes from in order dfs
+  let currentNode = stack.pop(); // Big original val node
+  let currentSum = currentNode.val; // Sum accumulator
+
+  // Going from largest to smallest original val nodes
+  while (stack.length) {
+    currentNode = stack.pop();
+    // Update Accumulated sum
+    currentSum += currentNode.val;
+    // Update current node val
+    currentNode.val = currentSum;
+  }
+  return root;
 };
 
-var dfs = function(root, arr) {
-  if (root.left) {
-      arr.push(root);
-  }
+var dfsInOrder = function(root) {
+  if (!root) return [];
+
+  let leftSide = dfsInOrder(root.left);
+  let current = [root];
+  let rightSide = dfsInOrder(root.right);
   
-  let children = [root.left, root.right];
-  for (let i = 0; i < children.length; i++) {
-      if (children[i]) {
-          dfs(children[i], arr);
-      }
-  }
+  return leftSide.concat(current).concat(rightSide);
 }
