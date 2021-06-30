@@ -32,3 +32,12 @@ console.log(message)
 
 // --watch
 // Watch for file changes and recompile them on the fly
+
+class Yelling {
+  yell():void {
+    console.log("HELLO WARUDO")
+  }
+}
+
+var firstObj = new Yelling;
+firstObj.yell();
