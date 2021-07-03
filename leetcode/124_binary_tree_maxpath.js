@@ -66,17 +66,23 @@
 //---------------------------------------------------------------------------
 
 var maxPathSum = function(root) {
+  // Set answer to smallest
   let answer = [-Infinity];
+  // dfs traversal to update answer by mutating array
   dfs(root, answer);
   return answer[0];
 };
 
 var dfs = function(root, globalMax) {
   if (!root) return 0;
+  // Maximum path for left and right
   let maxPathLeft = Math.max(0, dfs(root.left, globalMax));
   let maxPathRight = Math.max(0, dfs(root.right, globalMax));
-  let currentMax = root.val + maxPathLeft + maxPathRight;
-  globalMax.push(Math.max(globalMax[0], currentMax));
+  // Current total of everything best of left and best of right
+  let currentSum = root.val + maxPathLeft + maxPathRight;
+  // Update globalMax if currentSum is greater than global max
+  globalMax.push(Math.max(globalMax[0], currentSum));
   globalMax.shift();
+  // Return root value plus either left or right
   return Math.max(maxPathLeft, maxPathRight) + root.val;
 }
