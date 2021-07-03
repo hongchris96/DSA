@@ -1,5 +1,3 @@
-// WRONG SOLUTION
-
 // 124. Binary Tree Maximum Path Sum
 // Hard
 
@@ -25,40 +23,60 @@
  * @param {TreeNode} root
  * @return {number}
  */
-var maxPathSum = function(root) {
-  let normalArray = orderTraversal(root);
-  console.log(normalArray);
-  let allNegative = true;
-  for (let i = 0; i < normalArray.length; i++) {
-      if (normalArray[i] >= 0) {
-          allNegative = false;
-          break;
-      }
-  }
-  if (allNegative) return Math.max(...normalArray);
+
+// WRONG SOLUTION:
+
+// var maxPathSum = function(root) {
+//   let normalArray = orderTraversal(root);
+//   console.log(normalArray);
+//   let allNegative = true;
+//   for (let i = 0; i < normalArray.length; i++) {
+//       if (normalArray[i] >= 0) {
+//           allNegative = false;
+//           break;
+//       }
+//   }
+//   if (allNegative) return Math.max(...normalArray);
   
-  let maxSum = 0;
-  let tempSum = 0;
-  for (let i = 0; i < normalArray.length; i++) {
-      let num = normalArray[i];
-      if (num >= 0) {
-          tempSum += num;
-          if (i === normalArray.length-1 && tempSum > maxSum){
-              maxSum = tempSum;
-          }
-      } else {
-          if (tempSum > maxSum) {
-              maxSum = tempSum;
-          }
-          tempSum = 0;
-      }
-  }
-  return maxSum;
+//   let maxSum = 0;
+//   let tempSum = 0;
+//   for (let i = 0; i < normalArray.length; i++) {
+//       let num = normalArray[i];
+//       if (num >= 0) {
+//           tempSum += num;
+//           if (i === normalArray.length-1 && tempSum > maxSum){
+//               maxSum = tempSum;
+//           }
+//       } else {
+//           if (tempSum > maxSum) {
+//               maxSum = tempSum;
+//           }
+//           tempSum = 0;
+//       }
+//   }
+//   return maxSum;
+// };
+
+// var orderTraversal = function(root) {
+//   if (!root) return [];
+//   let left = orderTraversal(root.left);
+//   let right = orderTraversal(root.right);
+//   return left.concat([root.val], right);
+// }
+//---------------------------------------------------------------------------
+
+var maxPathSum = function(root) {
+  let answer = [-Infinity];
+  dfs(root, answer);
+  return answer[0];
 };
 
-var orderTraversal = function(root) {
-  if (!root) return [];
-  let left = orderTraversal(root.left);
-  let right = orderTraversal(root.right);
-  return left.concat([root.val], right);
+var dfs = function(root, globalMax) {
+  if (!root) return 0;
+  let maxPathLeft = Math.max(0, dfs(root.left, globalMax));
+  let maxPathRight = Math.max(0, dfs(root.right, globalMax));
+  let currentMax = root.val + maxPathLeft + maxPathRight;
+  globalMax.push(Math.max(globalMax[0], currentMax));
+  globalMax.shift();
+  return Math.max(maxPathLeft, maxPathRight) + root.val;
 }
