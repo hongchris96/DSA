@@ -16,3 +16,20 @@
 // Therefore, the array containing the result is [2,1,2,1].
 
 
+/**
+ * @param {number[]} queries
+ * @param {number} m
+ * @return {number[]}
+ */
+var processQueries = function(queries, m) {
+  let answer = [];
+  let p = Array.from(Array(m), (_, idx) => idx + 1);
+  for (let i = 0; i < queries.length; i++) {
+      let pindex = p.indexOf(queries[i]);
+      answer.push(pindex);
+      p.splice(pindex, 1);
+      p.unshift(queries[i]);
+  }
+  return answer;
+};
+
