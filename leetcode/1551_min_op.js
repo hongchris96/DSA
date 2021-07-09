@@ -14,16 +14,12 @@
 var minOperations = function(n) {
 
   // HUGE run time slightly improved
-  let arr = Array.from(Array(n), (_, idx) => idx).map(ele => 2 * ele + 1);
-    let x = 0;
-    let y = arr.length - 1;
-    let operations = 0;
-    while (x < y) {
-        let diff = arr[y] - arr[x];
-        operations += diff / 2;
-        x += 1;
-        y -= 1;
-    }
-    return operations;
+  let arr = Array.from(Array(n), (_, idx) => 2*idx+1);
+  let mid = Math.floor(n / 2);
+  let operations = 0;
+  for(let x = 0; x < mid; x++) {
+      operations += (arr[n - 1 - x] - arr[x]) / 2;
+  }
+  return operations;
 };
 
