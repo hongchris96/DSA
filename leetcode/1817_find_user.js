@@ -14,3 +14,16 @@
 // The user with ID=1 performed actions at minutes 2 and 3. Hence, they have a UAM of 2.
 // Since both users have a UAM of 2, answer[2] is 2, and the remaining answer[j] values are 0.
 
+var findingUsersActiveMinutes = function(logs, k) {
+  let idNtime = {};
+  let answer = new Array(k).fill(0);
+  for (let [id,time] of logs) {
+      if (!idNtime[id]) idNtime[id] = new Set();
+      idNtime[id].add(time);
+  }
+  for (let id in idNtime) {
+      answer[idNtime[id].size - 1] += 1;
+  }
+  return answer;
+};
+
