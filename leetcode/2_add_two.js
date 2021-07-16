@@ -36,48 +36,34 @@ var addTwoNumbers = function(l1, l2) {
   let current1 = l1;
   let current2 = l2;
   while (current1 || current2) { // O(N) where N is longer linkedLIst
-      let newNode = new ListNode();
-      if (current1 && current2) {
-          let currentSum = current1.val + current2.val + carryover;
-          if (currentSum > 9) {
-              carryover = 1;
-              currentSum = currentSum % 10;
-          } else {
-              carryover = 0;
-          }
-          newNode.val = currentSum;
-          pointer.next = newNode;
-          pointer = pointer.next;
-          current1 = current1.next;
-          current2 = current2.next;
-      } else if (current1) {
-          let currentSum = current1.val + carryover;
-          if (currentSum > 9) {
-              carryover = 1;
-              currentSum = currentSum % 10;
-          } else {
-              carryover = 0;
-          }
-          newNode.val = currentSum;
-          pointer.next = newNode;
-          pointer = pointer.next;
-          current1 = current1.next;
-      } else {
-          let currentSum = current2.val + carryover;
-          if (currentSum > 9) {
-              carryover = 1;
-              currentSum = currentSum % 10;
-          } else {
-              carryover = 0;
-          }
-          newNode.val = currentSum;
-          pointer.next = newNode;
-          pointer = pointer.next;
-          current2 = current2.next;
-      }
+    let newNode = new ListNode();
+    let currentSum;
+    if (current1 && current2) { // when both list have the same length
+      currentSum = current1.val + current2.val + carryover;
+    } else if (current1) { // when one list is longer than the other
+      currentSum = current1.val + carryover;
+    } else {
+      currentSum = current2.val + carryover;
+    }
+    // if current sum greater than 9, carry over
+    if (currentSum > 9) {
+      carryover = 1;
+      currentSum = currentSum % 10;
+    } else {
+      carryover = 0;
+    }
+    // assign digit value to new node
+    newNode.val = currentSum;
+    // attach node to linked list
+    pointer.next = newNode;
+    // shifting pointers
+    pointer = pointer.next;
+    current1 = current1 ? current1.next : null;
+    current2 = current2 ? current2.next : null;
   }
+  // when there's still one extra carry over in the end, e.g. 99 + 99 = (1)98
   if (carryover) {
-      pointer.next = new ListNode(carryover);
+    pointer.next = new ListNode(carryover);
   }
   return head.next;
 }
