@@ -30,37 +30,54 @@
  */
 
 var addTwoNumbers = function(l1, l2) {
-    // declare two storage array of digits
-    let num1arr = [];
-    let num2arr = [];
-    // go through both link list with a pointer and unshift the value into the array
-    let current1 = l1;
-    let current2 = l2;
-    while (current1 || current2) { // O(N) where N is longer linkedLIst
-        if (current1) {
-            num1arr.unshift(current1.val);
-            current1 = current1.next;
-        }
-        if (current2) {
-            num2arr.unshift(current2.val);
-            current2 = current2.next;
-        }
-    }
-    // join my array into string, parseInt turn them into numbers
-    num1arr = parseInt(num1arr.join(""));
-    num2arr = parseInt(num2arr.join(""));
-    // addition
-    // console.log(num1arr, num2arr);
-    let result = (num1arr + num2arr).toString();
-    // convert the num to string
-    // iterate through the string in a reverse order
-    let head = new ListNode(parseInt(result[result.length-1]));
-    let pointer = head;
-    for (let i = result.length-2; i >= 0; i--) {
-        let currentNode = new ListNode(parseInt(result[i]));
-        pointer.next = currentNode;
-        pointer = currentNode;
-    }
-    return head;
-    // building a new link list
+  let head = new ListNode();
+  let pointer = head;
+  let carryover = 0;
+  let current1 = l1;
+  let current2 = l2;
+  while (current1 || current2) { // O(N) where N is longer linkedLIst
+      let newNode = new ListNode();
+      if (current1 && current2) {
+          let currentSum = current1.val + current2.val + carryover;
+          if (currentSum > 9) {
+              carryover = 1;
+              currentSum = currentSum % 10;
+          } else {
+              carryover = 0;
+          }
+          newNode.val = currentSum;
+          pointer.next = newNode;
+          pointer = pointer.next;
+          current1 = current1.next;
+          current2 = current2.next;
+      } else if (current1) {
+          let currentSum = current1.val + carryover;
+          if (currentSum > 9) {
+              carryover = 1;
+              currentSum = currentSum % 10;
+          } else {
+              carryover = 0;
+          }
+          newNode.val = currentSum;
+          pointer.next = newNode;
+          pointer = pointer.next;
+          current1 = current1.next;
+      } else {
+          let currentSum = current2.val + carryover;
+          if (currentSum > 9) {
+              carryover = 1;
+              currentSum = currentSum % 10;
+          } else {
+              carryover = 0;
+          }
+          newNode.val = currentSum;
+          pointer.next = newNode;
+          pointer = pointer.next;
+          current2 = current2.next;
+      }
+  }
+  if (carryover) {
+      pointer.next = new ListNode(carryover);
+  }
+  return head.next;
 }
