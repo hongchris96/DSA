@@ -29,3 +29,18 @@ function bs(arr, target) {
       return bs(arr.slice(midIdx+1), target);
   }
 }
+
+// Method 2
+
+function getUniqueCharacter(s) {
+  // Write your code here
+  let charCount = {};
+  for (let i = 0; i < s.length; i++) {
+      if (!charCount[s[i]]) charCount[s[i]] = 0;
+      charCount[s[i]] += 1;
+  }
+  for (let i = 0; i < s.length; i++) {
+      if (charCount[s[i]] === 1) return i + 1;
+  }
+  return -1;
+}
