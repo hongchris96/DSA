@@ -1,6 +1,7 @@
 // Number of moves to make all elements equal in array
 // Each move increments 4 out of 5 elements in the array by 1
 
+// Run Time failed for large input
 function countMoves(numbers) {
   // Write your code here
   let maxNum = Math.max(...numbers);
