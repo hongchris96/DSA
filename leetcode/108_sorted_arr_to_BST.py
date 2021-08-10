@@ -25,11 +25,15 @@ class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
         return self.buildTree(nums)
 
+    # recursively building a binary tree that returns a head
     def buildTree(self, nums):
+        # when there's not more elment
         if len(nums) == 0:
             return None
         mid = len(nums) // 2
         head = TreeNode(nums[mid])
+        # build left and right the same way with left and right segments of
+        # the original array
         head.left = self.buildTree(nums[0:mid])
         head.right = self.buildTree(nums[mid+1:])
         return head
