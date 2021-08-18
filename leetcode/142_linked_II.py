@@ -36,11 +36,31 @@ class ListNode:
 
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
-        record = set()
-        pointer = head
-        while pointer:
-            if pointer in record:
+        # record = set()
+        # pointer = head
+        # while pointer:
+        #     if pointer in record:
+        #         return pointer
+        #     record.add(pointer)
+        #     pointer = pointer.next
+        # return None
+
+        # Constant space
+        slower = faster = head
+        while faster and faster.next:
+            # one pointer goes faster than the other
+            slower = slower.next
+            faster = faster.next.next
+            # eventually they go out of range if not cycle
+            # or they match up if cycle
+            if slower == faster:
+                # have another pointer starting at the beginning
+                pointer = head
+                while pointer != slower:
+                    # move both pointers at the same speed
+                    # and they magically points to the same node
+                    # that's the cycle beginning
+                    pointer = pointer.next
+                    slower = slower.next
                 return pointer
-            record.add(pointer)
-            pointer = pointer.next
         return None
